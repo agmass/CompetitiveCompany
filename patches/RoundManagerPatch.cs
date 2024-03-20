@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Reflection;
 using GameNetcodeStuff;
 using HarmonyLib;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements.Collections;
@@ -19,6 +20,7 @@ namespace CompetitiveCompany.patches {
         static void undo(RoundManager __instance) {
             Plugin.startLogic = false;
             Plugin.teams.Clear();
+            Plugin.initiated.Clear();
         }
 
         [HarmonyPatch(typeof(RoundManager), "Update")]
@@ -53,7 +55,6 @@ namespace CompetitiveCompany.patches {
                         }
                 }
                 }
-                if (!Config.Instance.ALLREQUIRED_respawning.Value) {
                 if (orange == 0) {
                     Plugin.startLogic = false;
                     Plugin.redScore = -400;
@@ -71,7 +72,6 @@ namespace CompetitiveCompany.patches {
                     }
                 }
                 }
-                }
                 HudManagerPatch._blueTeam.text = Plugin.blueScore.ToString();
                 HudManagerPatch._seperator.text = "vs";
                 HudManagerPatch._redTeam.text = Plugin.redScore.ToString();
@@ -83,16 +83,14 @@ namespace CompetitiveCompany.patches {
                     HudManagerPatch._seperator.text = "";
                 }
             }
-        
-        [HarmonyPatch(typeof(RoundManager), "Start")] 
-        [HarmonyPostfix]
-        static void getthatshit(RoundManager __instance) {
-            Plugin.startLogic = false;
-            if (GameNetworkManager.Instance.localPlayerController.IsHost || GameNetworkManager.Instance.localPlayerController.IsServer)
-			    {
-				    TimeOfDay.Instance.timeUntilDeadline = 2000f;
-			    }
-        }
+
+        [HarmonyPatch(typeof(TimeOfDay), "UpdateProfitQuotaCurrentTime")]
+	    [HarmonyPostfix]
+        public static void noDeadline(RoundManager __instance)
+	    {
+		    TimeOfDay.Instance.timeUntilDeadline = (int)(TimeOfDay.Instance.totalTime * (float)TimeOfDay.Instance.quotaVariables.deadlineDaysAmount);
+		    ((TMP_Text)StartOfRound.Instance.deadlineMonitorText).text = "Competitive\nCompany";
+	    }
 
         [HarmonyPatch(typeof(RoundManager), "GenerateNewLevelClientRpc")]
         [HarmonyPostfix]
@@ -106,10 +104,11 @@ namespace CompetitiveCompany.patches {
         [HarmonyPatch(typeof(StartMatchLever), "LeverAnimation")]
         [HarmonyPrefix]
         static bool noLeave(StartMatchLever __instance) {
+            
             int num = (int)(TimeOfDay.Instance.normalizedTimeOfDay * (60f * TimeOfDay.Instance.numberOfHours)) + 360;
             int num2 = (int)Mathf.Floor(num / 60);
-            if (num2 < 17 && Plugin.warnship && RoundManager.Instance.playersManager.shipHasLanded) {
-                HUDManager.Instance.DisplayTip("Competitive Company", "You can't leave this early!\nIf you want to leave anyways, You will be fined 200$ and the ship will leave.", true);
+            if (num2 < Config.Instance.graceTime.Value && Plugin.warnship && RoundManager.Instance.playersManager.shipHasLanded) {
+                HUDManager.Instance.DisplayTip("Competitive Company", "You can't leave this early!\nIf you want to leave anyways, You will be fined " + Config.Instance.fineAmount.Value +"$ and the ship will leave.", true);
                 Plugin.warnship = false;
                 return false;
             }

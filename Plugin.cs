@@ -43,7 +43,7 @@ namespace CompetitiveCompany
         public static Dictionary<PlayerControllerB, bool> initiated = new Dictionary<PlayerControllerB, bool>();
         public ManualLogSource mls;
 
-        public static new Config MyConfig { get; internal set; }
+        public static Config MyConfig { get; internal set; }
 
         
 
@@ -51,7 +51,7 @@ namespace CompetitiveCompany
         {
             if (Instance == null) {
                 Instance = this;
-            }   
+            } 
             MyConfig = new(base.Config);
             mls = BepInEx.Logging.Logger.CreateLogSource(modGUID);
 

@@ -30,7 +30,7 @@
           "build/BepInEx.Core.targets": {}
         }
       },
-      "BepInEx.PluginInfoProps/1.1.0": {
+      "BepInEx.PluginInfoProps/2.1.0": {
         "type": "package",
         "build": {
           "build/BepInEx.PluginInfoProps.props": {}
@@ -143,6 +143,24 @@
         },
         "runtime": {
           "lib/netstandard2.0/MonoMod.Utils.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Owen3H.BepInEx.CSync/2.2.4": {
+        "type": "package",
+        "dependencies": {
+          "BepInEx.Core": "5.4.21",
+          "BepInEx.PluginInfoProps": "2.1.0",
+          "UnityEngine.Modules": "2022.3.9"
+        },
+        "compile": {
+          "lib/netstandard2.1/CSync.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/CSync.dll": {
             "related": ".xml"
           }
         }
@@ -669,13 +687,13 @@
         "tools/Install.ps1"
       ]
     },
-    "BepInEx.PluginInfoProps/1.1.0": {
-      "sha512": "RqM3aaGs8Hc2m0D+8aSt9mv09rCMYNIF35NB3D6KA2zSpcXJh/9ZVWrPlIUJfA8KYzodSWcCMUexEW24fjwR3w==",
+    "BepInEx.PluginInfoProps/2.1.0": {
+      "sha512": "VCG3QRiqNdW9ku2FEcNsbK+HKxrZmW0VxwMNyLNO7h0xGorU+C6vBHN8Qq4eAL5fU11Uks5x2uoYdqEoKD3P8A==",
       "type": "package",
-      "path": "bepinex.plugininfoprops/1.1.0",
+      "path": "bepinex.plugininfoprops/2.1.0",
       "files": [
         ".nupkg.metadata",
-        "bepinex.plugininfoprops.1.1.0.nupkg.sha512",
+        "bepinex.plugininfoprops.2.1.0.nupkg.sha512",
         "bepinex.plugininfoprops.nuspec",
         "build/BepInEx.PluginInfoProps.props"
       ]
@@ -792,6 +810,25 @@
         "lib/netstandard2.0/MonoMod.Utils.xml",
         "monomod.utils.21.12.13.1.nupkg.sha512",
         "monomod.utils.nuspec"
+      ]
+    },
+    "Owen3H.BepInEx.CSync/2.2.4": {
+      "sha512": "sUbeM+3PFnUOsk54VnM3j0Ar6lXC/g65/ZJAT2qjMG8kwzceQAqpAkKHtIaeNFWYnUvtt/VYCH8oj5hhkH8OIg==",
+      "type": "package",
+      "path": "owen3h.bepinex.csync/2.2.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net472/CSync.dll",
+        "lib/net472/CSync.xml",
+        "lib/net48/CSync.dll",
+        "lib/net48/CSync.xml",
+        "lib/netstandard2.1/CSync.dll",
+        "lib/netstandard2.1/CSync.xml",
+        "nuget.README.md",
+        "owen3h.bepinex.csync.2.2.4.nupkg.sha512",
+        "owen3h.bepinex.csync.nuspec"
       ]
     },
     "System.Collections/4.3.0": {
@@ -2679,7 +2716,8 @@
     ".NETStandard,Version=v2.1": [
       "BepInEx.Analyzers >= 1.*",
       "BepInEx.Core >= 5.*",
-      "BepInEx.PluginInfoProps >= 1.*",
+      "BepInEx.PluginInfoProps >= 2.*",
+      "Owen3H.BepInEx.CSync >= 2.2.4",
       "UnityEngine.Modules >= 2022.3.9"
     ]
   },
@@ -2733,7 +2771,11 @@
           },
           "BepInEx.PluginInfoProps": {
             "target": "Package",
-            "version": "[1.*, )"
+            "version": "[2.*, )"
+          },
+          "Owen3H.BepInEx.CSync": {
+            "target": "Package",
+            "version": "[2.2.4, )"
           },
           "UnityEngine.Modules": {
             "include": "Compile",

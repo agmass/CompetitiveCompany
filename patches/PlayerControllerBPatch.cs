@@ -52,10 +52,17 @@ namespace CompetitiveCompany.patches {
         static void ff(PlayerControllerB __instance, ref int damageAmount, ref int playerWhoHit) {
             int num = (int)(TimeOfDay.Instance.normalizedTimeOfDay * (60f * TimeOfDay.Instance.numberOfHours)) + 360;
             int num2 = (int)Mathf.Floor(num / 60);
-            if (num2 < 14) {
+            if (num2 < Config.Instance.graceTime.Value) {
                 damageAmount = 0;
                 if (RoundManager.Instance.playersManager.allPlayerScripts[playerWhoHit].Equals(GameNetworkManager.Instance.localPlayerController)) {
-                    HUDManager.Instance.DisplayTip("Competitive Company","You can only attack others in the factory or after 2pm!", true);
+                    int a = 0;
+                    string b = "am";
+                    a += Config.Instance.graceTime.Value;
+                    if (a > 12) {
+                        a -= 12;
+                        b = "pm";
+                    }
+                    HUDManager.Instance.DisplayTip("Competitive Company","You can only attack others in the factory or after "+ a + b + "!", true);
                 }
             }
         }
@@ -76,6 +83,7 @@ namespace CompetitiveCompany.patches {
         [HarmonyPatch(typeof(PlayerControllerB), "Update")]
         [HarmonyPostfix]
         static void gammaPatch(PlayerControllerB __instance) {
+            if (__instance != null) {
             if (GameNetworkManager.Instance.localPlayerController.IsServer || GameNetworkManager.Instance.localPlayerController.IsHost) {
                 if (!Plugin.initiated.ContainsKey(__instance)) {
                     Plugin.initiated.Add(__instance, true);
@@ -110,6 +118,7 @@ namespace CompetitiveCompany.patches {
             if (__instance.currentSuitID == 2) {
                 __instance.usernameBillboardText.color = Color.yellow;
             }
+        }
         }
     }
 }

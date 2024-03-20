@@ -38,7 +38,6 @@
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/bin/Debug/netstandard2.1/Newtonsoft.Json.dll
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/bin/Debug/netstandard2.1/Unity.Profiling.Core.dll
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.csproj.AssemblyReference.cache
-/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/PluginInfo.cs
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.GeneratedMSBuildEditorConfig.editorconfig
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.AssemblyInfoInputs.cache
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.AssemblyInfo.cs
@@ -46,4 +45,4 @@
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.csproj.CopyComplete
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.dll
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.pdb
-/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/bin/Debug/netstandard2.1/CSync.dll
+/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/MyPluginInfo.cs

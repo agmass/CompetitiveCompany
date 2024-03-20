@@ -129,7 +129,7 @@ namespace CompetitiveCompany.patches {
                         String[] strings = parser.Split(" was");
                         Plugin.Instance.mls.LogInfo("Detected Player " + strings[0]);
                         foreach (PlayerControllerB pcb in RoundManager.Instance.playersManager.allPlayerScripts) {
-                            if (strings[0].Equals(pcb.playerUsername)) {
+                            if (strings[0].Equals(pcb.playerUsername) && !Plugin.teams.ContainsKey(pcb)) {
                                 Plugin.teams.Add(pcb,0);
                             }
                         }
@@ -145,7 +145,7 @@ namespace CompetitiveCompany.patches {
                         String[] strings = parser.Split(" was");
                         Plugin.Instance.mls.LogInfo("Detected Player " + strings[0]);
                         foreach (PlayerControllerB pcb in RoundManager.Instance.playersManager.allPlayerScripts) {
-                            if (strings[0].Equals(pcb.playerUsername)) {
+                            if (strings[0].Equals(pcb.playerUsername)&& !Plugin.teams.ContainsKey(pcb)) {
                                 Plugin.teams.Add(pcb,1);
                             }
                         }

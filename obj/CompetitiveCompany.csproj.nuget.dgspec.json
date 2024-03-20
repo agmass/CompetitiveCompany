@@ -51,7 +51,11 @@
             },
             "BepInEx.PluginInfoProps": {
               "target": "Package",
-              "version": "[1.*, )"
+              "version": "[2.*, )"
+            },
+            "Owen3H.BepInEx.CSync": {
+              "target": "Package",
+              "version": "[2.2.4, )"
             },
             "UnityEngine.Modules": {
               "include": "Compile",

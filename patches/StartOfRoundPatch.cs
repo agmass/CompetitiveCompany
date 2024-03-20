@@ -30,10 +30,6 @@ namespace CompetitiveCompany.patches {
         [HarmonyPrefix]
         static void teams()
         {
-            if (GameNetworkManager.Instance.localPlayerController.IsServer || GameNetworkManager.Instance.localPlayerController.IsHost)
-			    {
-				    TimeOfDay.Instance.timeUntilDeadline = 2000f;
-			    }
             foreach (PlayerControllerB playerControllerB in StartOfRound.Instance.allPlayerScripts) {
                 if (playerControllerB.disconnectedMidGame || playerControllerB.isPlayerDead || playerControllerB.isPlayerControlled) {
                     if (Plugin.teams.ContainsKey(playerControllerB)) {
@@ -59,7 +55,7 @@ namespace CompetitiveCompany.patches {
         }
         
 
-        [HarmonyPatch(typeof(StartOfRound), "StartGame")]
+        [HarmonyPatch(typeof(StartOfRound), "GeneratedFloorPostProcessing")]
         [HarmonyPostfix]
         static void gammaPatch(StartOfRound __instance) {
             int a = 1;
@@ -68,7 +64,7 @@ namespace CompetitiveCompany.patches {
                 Randomizer.Randomize<PlayerControllerB>(shuffled);
                 foreach (PlayerControllerB pcb in shuffled) {
                     if (pcb.isPlayerControlled) {
-                        if (pcb.currentSuitID != 0 && pcb.currentSuitID != 3) {
+                        if (pcb.currentSuitID != Config.Instance.team1Suit.Value && pcb.currentSuitID != Config.Instance.team2Suit.Value) {
                             if (a == 0) {
                                 HUDManager.Instance.AddTextToChatOnServer("<color="+Config.Instance.team1ColorCode.Value+">" +pcb.playerUsername + " was put on " + Config.Instance.team1Name.Value + "!");
                             }
@@ -84,7 +80,7 @@ namespace CompetitiveCompany.patches {
                                 a = 0;
                             }
                         }
-                        if (pcb.currentSuitID == 0) {
+                        if (pcb.currentSuitID == Config.Instance.team1Suit.Value) {
                             HUDManager.Instance.AddTextToChatOnServer("<color=" + Config.Instance.team1ColorCode.Value + ">" +pcb.playerUsername + " was put on " + Config.Instance.team1Name.Value + "!");
                             a = 1;
                             if (Plugin.teams.ContainsKey(pcb)) {
@@ -92,7 +88,7 @@ namespace CompetitiveCompany.patches {
                             }
                             Plugin.teams.Add(pcb, 0);
                         }
-                        if (pcb.currentSuitID == 3) {
+                        if (pcb.currentSuitID == Config.Instance.team2Suit.Value) {
                             a = 0;
                             HUDManager.Instance.AddTextToChatOnServer("<color=" + Config.Instance.team2ColorCode.Value + ">" +pcb.playerUsername + " was put on " + Config.Instance.team2Name.Value + "!");
                             if (Plugin.teams.ContainsKey(pcb)) {
@@ -109,34 +105,33 @@ namespace CompetitiveCompany.patches {
         [HarmonyPostfix]
         static void fine(StartOfRound __instance, ref int playerClientId)
         {
-            if (playerClientId == -1) return;
-            foreach (PlayerControllerB playerControllerB in RoundManager.Instance.playersManager.allPlayerScripts) {
-                        if (playerControllerB.isPlayerControlled && !playerControllerB.isPlayerDead) {
-                            playerControllerB.isInElevator = true;
-	                        playerControllerB.isInHangarShipRoom = true;
-	                        playerControllerB.isInsideFactory = false;
-                            playerControllerB.TeleportPlayer(RoundManagerPatch.GetPlayerSpawnPosition((int)playerControllerB.playerClientId));
-                        }
-                    }
+            if (playerClientId != -1) {
+                    StartOfRound.Instance.localPlayerController.isInElevator = true;
+	                StartOfRound.Instance.localPlayerController.isInHangarShipRoom = true;
+	                StartOfRound.Instance.localPlayerController.isInsideFactory = false;
+                    StartOfRound.Instance.localPlayerController.TeleportPlayer(RoundManagerPatch.GetPlayerSpawnPosition((int)StartOfRound.Instance.localPlayerController.playerClientId));
             PlayerControllerB pulled = StartOfRound.Instance.allPlayerScripts[playerClientId];
             if (!Plugin.finedForShip) {
                 Plugin.finedForShip = true;
                 int num = (int)(TimeOfDay.Instance.normalizedTimeOfDay * (60f * TimeOfDay.Instance.numberOfHours)) + 360;
                 int num2 = (int)Mathf.Floor(num / 60);
-                if (Plugin.teams.ContainsKey(pulled) && num2 < 14) {
+                if (Plugin.teams.ContainsKey(pulled) && num2 < Config.Instance.graceTime.Value) {
                     if (Plugin.teams.Get(pulled) == 0) {
                         if (GameNetworkManager.Instance.localPlayerController.IsServer || GameNetworkManager.Instance.localPlayerController.IsHost) {
-                            HUDManager.Instance.AddTextToChatOnServer("<color=" + Config.Instance.team1ColorCode.Value + ">" + Config.Instance.team1Name.Value  +" <color=red>was fined for leaving the ship before 2pm...");
+                            HUDManager.Instance.AddTextToChatOnServer("<color=" + Config.Instance.team1ColorCode.Value + ">" + Config.Instance.team1Name.Value  +" <color=red>was fined for leaving the ship early...");
+                            HUDManager.Instance.DisplayTip("Fined!", Config.Instance.team1Name.Value + " was fined for leaving!", true);
                         }
-                        Plugin.redScore -= 200;
+                        Plugin.redScore -= Config.Instance.fineAmount.Value;
                         
                     } else {
                         if (GameNetworkManager.Instance.localPlayerController.IsServer || GameNetworkManager.Instance.localPlayerController.IsHost) {
-                            HUDManager.Instance.AddTextToChatOnServer("<color=" + Config.Instance.team2ColorCode.Value  + ">" + Config.Instance.team2Name.Value  + " <color=red>was fined for leaving the ship before 2pm...");
+                            HUDManager.Instance.AddTextToChatOnServer("<color=" + Config.Instance.team2ColorCode.Value  + ">" + Config.Instance.team2Name.Value  + " <color=red>was fined for leaving the ship early...");
+                            HUDManager.Instance.DisplayTip("Fined!", Config.Instance.team1Name.Value + " was fined for leaving!", true);
                         }
-                        Plugin.blueScore -= 200;
+                        Plugin.blueScore -= Config.Instance.fineAmount.Value;
                     }
                 }
+            }
             }
         }
     }

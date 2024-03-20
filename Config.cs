@@ -10,7 +10,7 @@ using Unity.Collections;
 using Unity.Netcode;
 
 [DataContract]
-public class Config : SyncedInstance<Config>
+public class Config : SyncedConfig<Config>
 {
         [DataMember] internal SyncedEntry<int> team1Suit { get; private set; }
         [DataMember] internal SyncedEntry<int> team2Suit { get; private set; }
@@ -21,13 +21,16 @@ public class Config : SyncedInstance<Config>
         [DataMember] internal SyncedEntry<string> team1ColorCode { get; private set; }
         [DataMember] internal SyncedEntry<string> team2ColorCode { get; private set; }
 
-        [DataMember] internal SyncedEntry<bool> ALLREQUIRED_respawning { get; private set; }
+        [DataMember] internal SyncedEntry<int> graceTime { get; private set; }
+        [DataMember] internal SyncedEntry<int> fineAmount { get; private set; }
 
 
 
         
-        public Config(ConfigFile cfg) {
-            InitInstance(this);
+        public Config(ConfigFile cfg) : base("CompetitiveCompany") {
+            
+            ConfigManager.Register(this);
+            //InitInstance(this);
             team1Suit = cfg.BindSyncedEntry(
                 "Suits",                          // Config section
                 "Team 1 Suits",                     // Key of this config
@@ -70,11 +73,18 @@ public class Config : SyncedInstance<Config>
                 "Set the color code for team 2. Hex codes can be used."         // Description
             );
 
-            ALLREQUIRED_respawning = cfg.BindSyncedEntry(
-                "All Required",                  // Config subsection
-                "Respawn",                  // Key of this config
-                false,                               // Default value
-                "WARNING: ALL PLAYERS ARE REQUIRED TO HAVE THE MOD, OR IT COULD CAUSE MASSIVE DESYNC!!!\nRespawns all dead players every hour."         // Description
+            graceTime = cfg.BindSyncedEntry(
+                "Grace Time",                  // Config subsection
+                "Grace Time",                  // Key of this config
+                14,                               // Default value
+                "How long grace lasts for. 12+ = PM"         // Description
+            );
+
+            fineAmount = cfg.BindSyncedEntry(
+                "Grace Time",                  // Config subsection
+                "Fine Amount",                  // Key of this config
+                200,                               // Default value
+                "How much should you be fined for leaving early"         // Description
             );
             
         }
@@ -84,69 +94,11 @@ public class Config : SyncedInstance<Config>
 public static void InitializeLocalPlayer() {
     Plugin.Instance.mls.LogError("10088 - Start");
     if (IsHost) {
-        MessageManager.RegisterNamedMessageHandler("CompCompany_OnRequestConfigSync", OnRequestSync);
         Synced = true;
 
         return;
     }
 
     Synced = false;
-    MessageManager.RegisterNamedMessageHandler("CompCompany_OnReceiveConfigSync", OnReceiveSync);
-    RequestSync();
 }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(GameNetworkManager), "StartDisconnect")]
-        public static void PlayerLeave() {
-            Config.RevertSync();
-        }
-
-    internal static void RequestSync() {
-    if (!IsClient) return;
-
-    using FastBufferWriter stream = new(IntSize, Allocator.Temp);
-
-    // Method `OnRequestSync` will then get called on host.
-    stream.SendMessage("CompCompany_OnRequestConfigSync");
-}
-
-internal static void OnRequestSync(ulong clientId, FastBufferReader _) {
-    if (!IsHost) return;
-
-    byte[] array = SerializeToBytes(Instance);
-    int value = array.Length;
-
-    using FastBufferWriter stream = new(value + IntSize, Allocator.Temp);
-
-    try {
-        stream.WriteValueSafe(in value, default);
-        stream.WriteBytesSafe(array);
-
-        stream.SendMessage("CompCompany_OnReceiveConfigSync", clientId);
-    } catch(Exception e) {
-        Plugin.Instance.mls.LogError($"10088 - Error occurred syncing config with client: {clientId}\n{e}");
-    }
-}
-
-internal static void OnReceiveSync(ulong _, FastBufferReader reader) {
-    if (!reader.TryBeginRead(IntSize)) {
-        Plugin.Instance.mls.LogError("10088 - Config sync error: Could not begin reading buffer.");
-        return;
-    }
-
-    reader.ReadValueSafe(out int val, default);
-    if (!reader.TryBeginRead(val)) {
-        Plugin.Instance.mls.LogError("10088 - Config sync error: Host could not sync.");
-        return;
-    }
-
-    byte[] data = new byte[val];
-    reader.ReadBytesSafe(ref data, val);
-
-    try {
-        SyncInstance(data);
-    } catch(Exception e) {
-        Plugin.Instance.mls.LogError($"10088 - Error syncing config instance!\n{e}");
-    }
-}
-}
+}       
