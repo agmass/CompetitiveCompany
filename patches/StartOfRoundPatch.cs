@@ -58,38 +58,40 @@ namespace CompetitiveCompany.patches {
         [HarmonyPatch(typeof(StartOfRound), "GeneratedFloorPostProcessing")]
         [HarmonyPostfix]
         static void gammaPatch(StartOfRound __instance) {
-            int a = 1;
+            int curB = 1;
+            int curO = 0;
+            int a = 0;
             if (__instance.IsServer || __instance.IsHost) {
                 PlayerControllerB[] shuffled = (PlayerControllerB[])RoundManager.Instance.playersManager.allPlayerScripts.Clone();
                 Randomizer.Randomize<PlayerControllerB>(shuffled);
                 foreach (PlayerControllerB pcb in shuffled) {
                     if (pcb.isPlayerControlled) {
                         if (pcb.currentSuitID != Config.Instance.team1Suit.Value && pcb.currentSuitID != Config.Instance.team2Suit.Value) {
-                            if (a == 0) {
+                            if (curO <= curB) {
                                 HUDManager.Instance.AddTextToChatOnServer("<color="+Config.Instance.team1ColorCode.Value+">" +pcb.playerUsername + " was put on " + Config.Instance.team1Name.Value + "!");
+                                a = 0;
+                                curO++;
                             }
-                            if (a == 1) {
+                            if (curO > curB) {
                                 HUDManager.Instance.AddTextToChatOnServer("<color="+Config.Instance.team2ColorCode.Value+">" +pcb.playerUsername + " was put on " + Config.Instance.team2Name.Value + "!");
+                                curB++;
+                                a = 1;
                             }
                             if (Plugin.teams.ContainsKey(pcb)) {
                                 Plugin.teams.Remove(pcb);
                             }
                             Plugin.teams.Add(pcb, a);
-                            a++;
-                            if (a == 2) {
-                                a = 0;
-                            }
                         }
                         if (pcb.currentSuitID == Config.Instance.team1Suit.Value) {
                             HUDManager.Instance.AddTextToChatOnServer("<color=" + Config.Instance.team1ColorCode.Value + ">" +pcb.playerUsername + " was put on " + Config.Instance.team1Name.Value + "!");
-                            a = 1;
+                            curO++;
                             if (Plugin.teams.ContainsKey(pcb)) {
                                 Plugin.teams.Remove(pcb);
                             }
                             Plugin.teams.Add(pcb, 0);
                         }
                         if (pcb.currentSuitID == Config.Instance.team2Suit.Value) {
-                            a = 0;
+                            curB++;
                             HUDManager.Instance.AddTextToChatOnServer("<color=" + Config.Instance.team2ColorCode.Value + ">" +pcb.playerUsername + " was put on " + Config.Instance.team2Name.Value + "!");
                             if (Plugin.teams.ContainsKey(pcb)) {
                                 Plugin.teams.Remove(pcb);
