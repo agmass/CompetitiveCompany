@@ -42,7 +42,8 @@
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.AssemblyInfoInputs.cache
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.AssemblyInfo.cs
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.csproj.CoreCompileInputs.cache
-/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.csproj.CopyComplete
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.dll
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.pdb
 /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/MyPluginInfo.cs
+/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/CompetitiveCompany.sourcelink.json
+/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/Debug/netstandard2.1/Competit.20A5B56A.Up2Date

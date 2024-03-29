@@ -52,6 +52,10 @@ namespace CompetitiveCompany.patches {
         static void ff(PlayerControllerB __instance, ref int damageAmount, ref int playerWhoHit) {
             int num = (int)(TimeOfDay.Instance.normalizedTimeOfDay * (60f * TimeOfDay.Instance.numberOfHours)) + 360;
             int num2 = (int)Mathf.Floor(num / 60);
+            if (RoundManager.Instance.playersManager.allPlayerScripts[playerWhoHit].currentSuitID == __instance.currentSuitID) {
+                 HUDManager.Instance.DisplayTip("Competitive Company","Friendly fire is not allowed!", true);
+                 damageAmount = 0;
+            }
             if (num2 < Config.Instance.graceTime.Value) {
                 damageAmount = 0;
                 if (RoundManager.Instance.playersManager.allPlayerScripts[playerWhoHit].Equals(GameNetworkManager.Instance.localPlayerController)) {

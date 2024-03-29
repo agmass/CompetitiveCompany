@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Your Mod Description Goes Here")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b26f609e928f638868b8916e7cd58fa7c6ac023")]
 [assembly: System.Reflection.AssemblyProductAttribute("CompetitiveCompany")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CompetitiveCompany")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,3 +1,5 @@
 is_global = true
 build_property.RootNamespace = CompetitiveCompany
 build_property.ProjectDir = /home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

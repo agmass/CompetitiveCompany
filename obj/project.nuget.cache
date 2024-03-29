@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6kDdidVwW1X/KWfQ/A4uS63P7BwYFODANvylppn/FicSLjEgS5MRUBwiCBre3mPks/52V4m6y2gEX5UMI6j5ow==",
+  "dgSpecHash": "F1h4rtnBsIkDilyh598FVFJkvTQwAYrM7Gm3L9DzFwZq4wGBhZpHgM3S51j1UlBLRYhbpXXGvXf5YuZGjBmaBQ==",
   "success": true,
   "projectFilePath": "/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj",
   "expectedPackageFiles": [
@@ -42,7 +42,8 @@
     "/home/agmas/.nuget/packages/system.text.encoding/4.3.0/system.text.encoding.4.3.0.nupkg.sha512",
     "/home/agmas/.nuget/packages/system.threading/4.3.0/system.threading.4.3.0.nupkg.sha512",
     "/home/agmas/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
-    "/home/agmas/.nuget/packages/unityengine.modules/2022.3.9/unityengine.modules.2022.3.9.nupkg.sha512"
+    "/home/agmas/.nuget/packages/unityengine.modules/2022.3.9/unityengine.modules.2022.3.9.nupkg.sha512",
+    "/home/agmas/.nuget/packages/netstandard.library.ref/2.1.0/netstandard.library.ref.2.1.0.nupkg.sha512"
   ],
   "logs": []
 }
