@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj": {}
+    "/media/agmas/c893da77-a135-43ce-ba20-0bde37811828/a/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj": {}
   },
   "projects": {
-    "/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj": {
+    "/media/agmas/c893da77-a135-43ce-ba20-0bde37811828/a/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj",
+        "projectUniqueName": "/media/agmas/c893da77-a135-43ce-ba20-0bde37811828/a/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj",
         "projectName": "CompetitiveCompany",
-        "projectPath": "/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj",
+        "projectPath": "/media/agmas/c893da77-a135-43ce-ba20-0bde37811828/a/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/CompetitiveCompany.csproj",
         "packagesPath": "/home/agmas/.nuget/packages/",
-        "outputPath": "/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/",
+        "outputPath": "/media/agmas/c893da77-a135-43ce-ba20-0bde37811828/a/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/agmas/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/NuGet.Config",
+          "/media/agmas/c893da77-a135-43ce-ba20-0bde37811828/a/ALVR/LethalCompanyModdingWiki-main/CompetitiveCompany/NuGet.Config",
           "/home/agmas/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -34,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -79,18 +74,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "NETStandard.Library.Ref",
-              "version": "[2.1.0, 2.1.0]"
-            }
-          ],
           "frameworkReferences": {
             "NETStandard.Library": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.202/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.105/RuntimeIdentifierGraph.json"
         }
       }
     }

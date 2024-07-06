@@ -66,7 +66,7 @@ namespace CompetitiveCompany.patches {
                         a -= 12;
                         b = "pm";
                     }
-                    HUDManager.Instance.DisplayTip("Competitive Company","You can only attack others in the factory or after "+ a + b + "!", true);
+                    HUDManager.Instance.DisplayTip("Competitive Company","You can only attack others after "+ a + b + "!", true);
                 }
             }
         }
@@ -91,7 +91,10 @@ namespace CompetitiveCompany.patches {
             if (GameNetworkManager.Instance.localPlayerController.IsServer || GameNetworkManager.Instance.localPlayerController.IsHost) {
                 if (!Plugin.initiated.ContainsKey(__instance)) {
                     Plugin.initiated.Add(__instance, true);
+                    HUDManager.Instance.AddTextToChatOnServer("[CC*]:PVP:" +Plugin.pvpEnabled + ":sync");
+                    HUDManager.Instance.AddTextToChatOnServer("[CC*]: If you see messages with [CC*], this means the mod has not been installed properly. These messages are used to sync clients.", -1);
                     HUDManager.Instance.AddTextToChatOnServer("<color=green>Use the suit rack to switch team or\nPut on the Yellow suit to be randomly selected!", -1);
+                    
                     __instance.StartCoroutine(SuitSetter(__instance));
                 }
                 if (Plugin.teams.ContainsKey(__instance) && Plugin.startLogic && RoundManager.Instance.dungeonFinishedGeneratingForAllPlayers) {

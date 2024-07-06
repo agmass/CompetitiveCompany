@@ -128,51 +128,11 @@ namespace CompetitiveCompany.patches {
 			}
 		}
 
-    static public UnityEngine.Vector3 GetPlayerSpawnPosition(int playerNum, bool simpleTeleport = false)
+    static public UnityEngine.Vector3 GetPlayerSpawnPosition()
     {
         Transform[] playerSpawnPositions = StartOfRound.Instance.playerSpawnPositions;
-	if (simpleTeleport)
-	{
 		return playerSpawnPositions[0].position;
-	}
-	Debug.DrawRay(playerSpawnPositions[playerNum].position, UnityEngine.Vector3.up, Color.red, 15f);
-	if (!Physics.CheckSphere(playerSpawnPositions[playerNum].position, 0.2f, 67108864, QueryTriggerInteraction.Ignore))
-	{
-		return playerSpawnPositions[playerNum].position;
-	}
-	if (!Physics.CheckSphere(playerSpawnPositions[playerNum].position + UnityEngine.Vector3.up, 0.2f, 67108864, QueryTriggerInteraction.Ignore))
-	{
-		return playerSpawnPositions[playerNum].position + UnityEngine.Vector3.up * 0.5f;
-	}
-	for (int i = 0; i < playerSpawnPositions.Length; i++)
-	{
-		if (i != playerNum)
-		{
-			Debug.DrawRay(playerSpawnPositions[i].position, UnityEngine.Vector3.up, Color.green, 15f);
-			if (!Physics.CheckSphere(playerSpawnPositions[i].position, 0.12f, -67108865, QueryTriggerInteraction.Ignore))
-			{
-				return playerSpawnPositions[i].position;
-			}
-			if (!Physics.CheckSphere(playerSpawnPositions[i].position + UnityEngine.Vector3.up, 0.12f, 67108864, QueryTriggerInteraction.Ignore))
-			{
-				return playerSpawnPositions[i].position + UnityEngine.Vector3.up * 0.5f;
-			}
-		}
-	}
-	System.Random random = new System.Random(65);
-	float y = playerSpawnPositions[0].position.y;
-	for (int j = 0; j < 15; j++)
-	{
-		UnityEngine.Vector3 vector = new UnityEngine.Vector3(random.Next((int)StartOfRound.Instance.shipInnerRoomBounds.bounds.min.x, (int)StartOfRound.Instance.shipInnerRoomBounds.bounds.max.x), y, random.Next((int)StartOfRound.Instance.shipInnerRoomBounds.bounds.min.z, (int)StartOfRound.Instance.shipInnerRoomBounds.bounds.max.z));
-		vector = StartOfRound.Instance.shipInnerRoomBounds.transform.InverseTransformPoint(vector);
-		Debug.DrawRay(vector, UnityEngine.Vector3.up, Color.yellow, 15f);
-		if (!Physics.CheckSphere(vector, 0.12f, 67108864, QueryTriggerInteraction.Ignore))
-		{
-			return playerSpawnPositions[j].position;
-		}
-	}
-	return playerSpawnPositions[0].position + UnityEngine.Vector3.up * 0.5f;
-}
+    }
         
     }
 }

@@ -23,6 +23,9 @@ public class Config : SyncedConfig<Config>
 
         [DataMember] internal SyncedEntry<int> graceTime { get; private set; }
         [DataMember] internal SyncedEntry<int> fineAmount { get; private set; }
+         [DataMember] internal SyncedEntry<bool> graceInside { get; private set; }
+        
+        [DataMember] internal SyncedEntry<bool> viewSyncMessages { get; private set; }
 
 
 
@@ -86,13 +89,25 @@ public class Config : SyncedConfig<Config>
                 200,                               // Default value
                 "How much should you be fined for leaving early"         // Description
             );
+
+            graceInside = cfg.BindSyncedEntry(
+                "Grace Time",                  // Config subsection
+                "Grace Inside",                  // Key of this config
+                true,                               // Default value
+                "If Grace Period should be applied inside the facility, like older versions of the mod."         // Description
+            );
+            viewSyncMessages = cfg.BindSyncedEntry(
+                "Debugging",                  // Config subsection
+                "View Sync Messages",                  // Key of this config
+                false,                               // Default value
+                "See [CC*] Syncing messages, as if you didn't have the mod installed."         // Description
+            );
             
         }
 
         [HarmonyPostfix]
 [HarmonyPatch(typeof(PlayerControllerB), "ConnectClientToPlayerObject")]
 public static void InitializeLocalPlayer() {
-    Plugin.Instance.mls.LogError("10088 - Start");
     if (IsHost) {
         Synced = true;
 

@@ -8,6 +8,8 @@ using HarmonyLib;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace CompetitiveCompany.patches {
 
@@ -63,6 +65,28 @@ namespace CompetitiveCompany.patches {
 			    ((Behaviour)obj3).enabled = true;
 			    _blueTeam = obj3;
             }
+
+
+            [HarmonyPatch(typeof(HUDManager), "SubmitChat_performed")]
+        [HarmonyPrefix]
+        static bool undo2(HUDManager __instance, ref InputAction.CallbackContext context) {
+            PlayerControllerB localPlayer = GameNetworkManager.Instance.localPlayerController;
+            if (!context.performed || localPlayer == null || !localPlayer.isTypingChat || ((!localPlayer.IsOwner || (__instance.IsServer && !localPlayer.isHostPlayerObject)) && !localPlayer.isTestingPlayer) || localPlayer.isPlayerDead)
+	        {
+		        return false;
+	        }
+            if (__instance.chatTextField.text.StartsWith("/pvp") && (localPlayer.IsHost || localPlayer.IsServer)) {
+                Plugin.pvpEnabled = !Plugin.pvpEnabled;
+                HUDManager.Instance.AddTextToChatOnServer("[CC*]:PVP:" +Plugin.pvpEnabled + ":man", -1);
+                localPlayer.isTypingChat = false;
+	            __instance.chatTextField.text = "";
+	            EventSystem.current.SetSelectedGameObject(null);
+	            __instance.PingHUDElement(__instance.Chat);
+	            __instance.typingIndicator.enabled = false;    
+                return false;
+            }
+            return true;
+        }
 
             [HarmonyPatch(typeof(HUDManager), "DisplayDaysLeft")]
             [HarmonyPrefix]
@@ -122,6 +146,23 @@ namespace CompetitiveCompany.patches {
 		    public static bool Prefix(HUDManager __instance, string chatMessage, string nameOfUserWhoTyped = "")
 		    {
                 if (string.IsNullOrEmpty(nameOfUserWhoTyped)) {
+                    if (chatMessage.StartsWith("[CC*]")) {
+                        if (chatMessage.Split(":")[1]=="PVP") {
+                            if (chatMessage.Split(":")[2]=="True") {
+                                Plugin.pvpEnabled = true;
+                                if (chatMessage.Split(":")[3]!="sync") {
+                                    HUDManager.Instance.DisplayTip("CC Host Controls","PVP Enabled!", true);
+                                }
+                            }
+                            if (chatMessage.Split(":")[2]=="False") {
+                                Plugin.pvpEnabled = false;
+                                if (chatMessage.Split(":")[3]!="sync") {
+                                    HUDManager.Instance.DisplayTip("CC Host Controls","PVP Disabled.", false);
+                                }
+                            }
+                        }
+                        return Config.Instance.viewSyncMessages.Value;
+                    }
                     if (chatMessage.StartsWith("<color="+ Config.Instance.team1ColorCode.Value +">") && chatMessage.EndsWith(" was put on "+ Config.Instance.team1Name.Value +"!"))
 			        {
 			    	    string parser = (string)chatMessage.Clone();
